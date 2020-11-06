@@ -156,7 +156,96 @@
       </div>
     </div>
   </div>
+{{-- End Modal Section --}}
 
+{{-- Edit Modal Section --}}
+  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Employee Information</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+       <form action="" name="employee_form" id="employee_form" class="form-horizontal form-group" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12 form-group ">
+              <label for="first_name">Company</label>
+              <select name="company" id="company" class="form-control">
+                <option value="">Select Company</option>
+                  @foreach ($companies as $company)
+              <option value="{{$company->company_id}}">{{$company->name}}</option>
+                  @endforeach
+              </select>
+                <span class="text-danger">
+                  <strong id="company-error"></strong>
+                </span>
+            </div>
+        </div>
+
+          <div class="row">
+              <div class="col-md-6 form-group ">
+                <label for="first_name">First Name</label>
+                <input class="form-control first_name" type="text" name="first_name" id="first_name" placeholder="First name" value="">
+                  <span class="text-danger">
+                    <strong id="first_name-error"></strong>
+                  </span>
+              </div>
+              <div class="col-md-6 form-group ">
+                <label for="last_name">Last name</label>
+                <input class="form-control last_name" type="text" name="last_name" id="last_name" placeholder="Last name">
+                <span class="text-danger">
+                  <strong id="last_name-error"></strong>
+                </span>
+              </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 form-group ">
+              <label for="employee_age">Age</label>
+              <input class="form-control age" type="text" name="age" id="age" placeholder="Age">
+              <span class="text-danger">
+                <strong id="age-error"></strong>
+              </span>
+            </div>
+            <div class="col-md-6 form-group ">
+              <label for="position">Position</label>
+              <input class="form-control position" type="text" name="position" id="position" placeholder="Positon">
+              <span class="text-danger">
+                <strong id="position-error"></strong>
+              </span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 form-group ">
+              <label for="employee_age ">Email</label>
+              <input class="form-control email" type="text" name="email" id="email" placeholder="Email">
+              <span class="text-danger">
+                <strong id="email-error"></strong>
+              </span>
+            </div>
+            <div class="col-md-6 form-group ">
+              <label for="position">Phone Number</label>
+              <input class="form-control phone" type="text" name="phone" id="phone" placeholder="Phone Number">
+              <span class="text-danger">
+                <strong id="phone-error"></strong>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+        </form> 
+      </div>
+    </div>
+  </div>
 </div>
+{{-- End Edit Modal Section --}}
 @endsection
 

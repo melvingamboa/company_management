@@ -1,7 +1,9 @@
 function addEmployee(){
     $('document').ready( function(){
-        
+       
+       
         dataTable();
+       
         $('#employee_form').on('submit', function(){
             $( '#first_name-error' ).html( "" );
             $( '#last_name-error' ).html( "" );
@@ -48,9 +50,28 @@ function addEmployee(){
                 '</div>'
             );
         }
+        $(document).on('click', '.edit_m', function(){
+            $('#exampleModal').modal('show');
+            $id =  $(this).data('id');
+            $.ajax({
+                url: '/employees/edit_employees/'+$id,
+                success: function(res) {
+                    $('#first_name').val(res.data.first_name);
+                    $('#last_name').val(res.data.last_name  );
+                    $('#position').val(res.data.position);
+                    $('#email').val(res.data.email);
+                    $('#age').val(res.data.age);
+                    $('#phone').val(res.data.phone);
+                }
+         });
+    
+        }); 
+        
+
     });
 
     function dataTable(){
+
         $('#myTable').DataTable( {
             "processing": true,
             // "serverSide": true,
@@ -61,11 +82,10 @@ function addEmployee(){
                 { "data": "email" },
                 { "data": "employee_id" },
                 { "render": function(data, type, row, meta) {
-
-                    var csrf = $('input[name="_token"]').val();
+                     var csrf = $('input[name="_token"]').val();
                     return `
                         <a href="/employees/${row['employee_id']}" class="btn btn-secondary btn-sm">View</a>
-                        <a href="/employees/edit/${row['employee_id']}" class="btn btn-primary btn-sm">Edit</a>
+                        <a href="javascript:;" class="btn btn-primary btn-sm edit_m" data-id="${row['employee_id']}">Edit</a>
                         <form action="/employees/destroy/${row['employee_id']}" method="POST">
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="${csrf}">
@@ -76,5 +96,8 @@ function addEmployee(){
             ]
         } );
     }
+
+   
 }
 addEmployee();
+

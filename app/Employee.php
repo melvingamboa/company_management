@@ -30,11 +30,12 @@ class Employee extends Model
 
     public function getEmployeeCompany($employee_id)
     {
-        $company   = DB::table('companies')
+        $company = DB::table('companies')
                 ->select('companies.name','employees.first_name')
                 ->join('employees', 'employees.company_id','companies.company_id')
                 ->where('employees.employee_Id',$employee_id)
                 ->first();
+                
         return $company;
     }
 

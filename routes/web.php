@@ -45,6 +45,12 @@ Route::post('/employees/store', 'EmployeesController@store');
 Route::delete('/employees/destroy/{employee_id}', 'EmployeesController@destroy');
 Route::get('/employees/{employee_id}', 'EmployeesController@show');
 
+Route::get('/employees/edit_employees/{id}', 'EmployeesController@edit_employees');
+Route::patch('/employees/{id}', 'EmployeesController@update');
+
+// Route::get('/employees/edit/{employee_id}', 'EmployeesController@edit');
+
+
 
 
 

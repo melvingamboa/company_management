@@ -30,23 +30,21 @@ class EmployeesController extends Controller
     }
     
     public function ajaxEmployees(){
-
         $employees = Employee::all();
-      
-        return response()->json(['data'=> $employees]);
 
-    }
+        return response()->json(['data'=> $employees]);
+    } 
 
     public function index()
     {
-        
-
-        $employees = Employee::all();
-        $companies = Company::orderBy('name', 'asc')->get();
+        $employees          = Employee::all();
+        $companies          = Company::orderBy('name', 'asc')->get();
 
         return view('employees.index')->with(["companies"=> $companies, 'employees'=> $employees]);
     }
 
+
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -83,11 +81,12 @@ class EmployeesController extends Controller
                 'age'           => 'required',
                 'position'      => 'required',
                 'company'       => 'required',
-                'email'         => 'required|unique:employees',
+                'email'         => 'required|unique:employees|email:rfc,dns',
                 'phone'         => 'nullable|digits:11'
         ]);
-        
+
         if ($validator->passes()) {
+            
             $employee = new Employee;
             $employee->first_name       = ucwords(strtolower($request->first_name));
             $employee->last_name        = ucwords(strtolower($request->last_name));
@@ -125,11 +124,14 @@ class EmployeesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
 
+    public function edit_employees($id)
+    {
+        $employees_info = Employee::find($id);
+
+        return response()->json(['data'=> $employees_info]);
+        // return view('employees.index')->with(["employees_info"=> $employees_info]);
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -137,9 +139,26 @@ class EmployeesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $employee_id)
     {
-        //
+        
+            $validatedData = $request->validate([
+                'first_name'    => 'required',
+                'last_name'     => 'required',
+                'age'           => 'required',
+                'position'      => 'required',
+                'company'       => 'required',
+                'email'         => 'required|email:rfc,dns',
+                'phone'         => 'nullable|digits:11'
+            ]);
+                
+            $employee = Employee::find($employee_id);
+
+            print_r($employee);die;
+
+            $employee->update($validatedData);
+         
+            return redirect('employees/index');
     }
 
     /**
